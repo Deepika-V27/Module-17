@@ -21,48 +21,52 @@ To write a Python program to generate a graph for a given **fixed degree sequenc
 ## PYTHON PROGRAM
 
 ```
-# A Python3 program to print topological sorting of a DAG
-def addEdge(u, v):
-	global adj
-	adj[u].append(v)
+# Python3 program to generate a graph
+# for a given fixed degrees
 
-# The function to do DFS() and stores departure time
-# of all vertex
-def DFS(v):
-	global visited, departure, time
-	visited[v] = 1
-	for i in adj[v]:
-		if visited[i] == 0:
-			DFS(i)
-	departure[time] = v
-	time += 1
+# A function to print the adjacency matrix.
+def printMat(degseq, n):
+	
+	# n is number of vertices
+	mat = [[0] * n for i in range(n)]
 
-# The function to do Topological Sort. It uses DFS().
-def topologicalSort():
+	for i in range(n):
+		for j in range(i + 1, n):
 
-	# perform DFS on all unvisited vertices
-	for i in range(V):
-		if(visited[i] == 0):
-			DFS(i)
+			# For each pair of vertex decrement
+			# the degree of both vertex.
+			if (degseq[i] > 0 and degseq[j] > 0):
+				degseq[i] -= 1
+				degseq[j] -= 1
+				mat[i][j] = 1
+				mat[j][i] = 1
 
-	# Print vertices in topological order
-	for i in range(V - 1, -1, -1):
-		print(departure[i], end = " ")
+	# Print the result in specified form
+	print("      ", end ="")
+	for i in range(n):
+		print(" ", "(", i, ")", end ="")
+	print()
+	print()
+	for i in range(n):
+		print("  ", "(", i, ")", end = " ")
+		for j in range(n):
+			print("  ", mat[i][j], end = " ")
+		print()
 
-# Driver code
-if __name__ == '__main__':
+# Driver Code
+degseq=[]
+for i in range(0, 5):
+    ele = int(input())
+  
+    degseq.append(ele)
+#degseq =[v0,v1,v2,v3,v4]
 
-	# Create a graph given in the above diagram
-	V,time, adj, visited, departure = 6, 0, [[] for i in range(7)], [0 for i in range(7)],[-1 for i in range(7)]
-	addEdge(5, 2)
-	addEdge(5, 0)
-	addEdge(4, 0)
-	addEdge(4, 1)
-	addEdge(2, 3)
-	addEdge(3, 1)
+n = len(degseq)
+printMat(degseq, n)
 
-	print("Topological Sort of the given graph is")
-	topologicalSort()
+
+
+
 
 
 
@@ -70,7 +74,8 @@ if __name__ == '__main__':
 ```
 
 ## OUTPUT
-![image](https://github.com/user-attachments/assets/414afeb0-315a-47aa-8f2b-ee3246affcf4)
+![image](https://github.com/user-attachments/assets/a6731dd8-6a09-424e-9a00-d2f71de23781)
+
 
 
 ## RESULT
